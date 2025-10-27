@@ -14,12 +14,7 @@ async function register(req, res) {
             name,
             password,
         });
-        res.cookie('access_token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 1000 * 60 * 60, // 1 hour
-        });
+        _createCookie(res, token);
         return res.status(http_1.CREATED).json(user);
     }
     catch (error) {
@@ -30,12 +25,7 @@ async function login(req, res) {
     try {
         const { email, password } = req.body;
         const { user, token } = await auth_service_1.default.login({ email, password });
-        res.cookie('access_token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
-            sameSite: 'strict',
-            maxAge: 1000 * 60 * 60, // 1 hour
-        });
+        _createCookie(res, token);
         return res.status(http_1.OK).json(user);
     }
     catch (error) {
@@ -68,6 +58,14 @@ async function me(req, res) {
     catch (error) {
         return res.status(http_1.BAD_REQUEST).json({ error });
     }
+}
+function _createCookie(res, token) {
+    res.cookie('access_token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: 1000 * 60 * 60,
+    });
 }
 exports.default = {
     register,

@@ -12,13 +12,7 @@ async function register(req: Request, res: Response) {
       password,
     })
 
-    res.cookie('access_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 1000 * 60 * 60, // 1 hour
-    })
-
+    _createCookie(res, token)
     return res.status(CREATED).json(user)
   } catch (error) {
     return res.status(BAD_REQUEST).json({ error })
@@ -30,13 +24,7 @@ async function login(req: Request, res: Response) {
     const { email, password } = req.body
     const { user, token } = await authService.login({ email, password })
 
-    res.cookie('access_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 1000 * 60 * 60, // 1 hour
-    })
-
+    _createCookie(res, token)
     return res.status(OK).json(user)
   } catch (error) {
     return res.status(BAD_REQUEST).json({ error })
@@ -72,6 +60,15 @@ async function me(req: Request, res: Response) {
   } catch (error) {
     return res.status(BAD_REQUEST).json({ error })
   }
+}
+
+function _createCookie(res: Response<any, Record<string, any>>, token: string) {
+  res.cookie('access_token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 1000 * 60 * 60,
+  })
 }
 
 export default {
