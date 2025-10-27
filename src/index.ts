@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express'
+import cookieParser from 'cookie-parser'
 import authRoutes from './api/auth/auth.routes'
 
 import 'dotenv/config'
@@ -10,6 +11,7 @@ const port = process.env.PORT
 // middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(cookieParser())
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, world')

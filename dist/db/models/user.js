@@ -42,8 +42,15 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const schema = new mongoose_1.Schema({
     name: { type: String, required: true, lowercase: true, trim: true },
     email: { type: String, required: true, lowercase: true, unique: true },
-    password: { type: String, required: true, select: false },
-}, { timestamps: true });
+    password: { type: String, required: true },
+}, {
+    methods: {
+        async comparePasswords(password) {
+            return await bcrypt_1.default.compare(password, this.password);
+        },
+    },
+    timestamps: true,
+});
 schema.pre('save', async function (next) {
     if (!this.isModified('password'))
         return next();
