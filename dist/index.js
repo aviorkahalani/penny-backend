@@ -11,6 +11,7 @@ const app = (0, express_1.default)();
 const port = process.env.PORT;
 // middlewares
 app.use(express_1.default.json());
+app.use(express_1.default.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
     res.send('Hello, world');
 });

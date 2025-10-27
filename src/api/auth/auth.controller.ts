@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import authService from './auth.service'
 
 async function register(req: Request, res: Response) {
   //
