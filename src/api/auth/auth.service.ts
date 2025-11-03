@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { User } from '../../db/models/user'
 import { Types } from 'mongoose'
+import { AppError } from '../../utils/AppError'
+import { BAD_REQUEST } from '../../utils/http'
 
 interface Credentials {
   email: string
@@ -11,7 +13,7 @@ interface Credentials {
 async function register(credentials: Credentials) {
   const isUserExist = await User.findOne({ email: credentials.email })
   if (isUserExist) {
-    throw new Error('user already exist')
+    throw new AppError(BAD_REQUEST, 'user already exist')
   }
 
   const user = new User(credentials)

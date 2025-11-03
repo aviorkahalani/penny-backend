@@ -5,10 +5,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const user_1 = require("../../db/models/user");
+const AppError_1 = require("../../utils/AppError");
+const http_1 = require("../../utils/http");
 async function register(credentials) {
     const isUserExist = await user_1.User.findOne({ email: credentials.email });
     if (isUserExist) {
-        throw new Error('user already exist');
+        throw new AppError_1.AppError(http_1.BAD_REQUEST, 'user already exist');
     }
     const user = new user_1.User(credentials);
     await user.save();
