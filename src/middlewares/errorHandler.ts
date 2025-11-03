@@ -10,8 +10,6 @@ const errorHandler = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log(error)
-
   if (error instanceof AppError) {
     const { message, code } = error
 
