@@ -9,6 +9,7 @@ const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const auth_routes_1 = __importDefault(require("./api/auth/auth.routes"));
 require("dotenv/config");
 require("./db");
+const errorHandler_1 = __importDefault(require("./middlewares/errorHandler"));
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 const corsOptions = {
@@ -25,6 +26,7 @@ app.get('/', (req, res) => {
 });
 // routes
 app.use('/api/auth', auth_routes_1.default);
+app.use(errorHandler_1.default);
 app.listen(port, () => {
     console.log(`server listening on http://localhost:${port}`);
 });

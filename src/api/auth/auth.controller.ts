@@ -2,65 +2,51 @@ import { Request, Response } from 'express'
 import authService from './auth.service'
 import { BAD_REQUEST, CREATED, OK, UNAUTHORIZED } from '../../utils/http'
 import mongoose from 'mongoose'
+import { handler } from '../../utils/handler'
+import { AppError } from '../../utils/AppError'
 
-async function register(req: Request, res: Response) {
-  try {
-    const { email, name, password } = req.body
-    const { user, token } = await authService.register({
-      email,
-      name,
-      password,
-    })
+const register = handler(async (req: Request, res: Response) => {
+  const { email, name, password } = req.body
+  const { user, token } = await authService.register({
+    email,
+    name,
+    password,
+  })
 
-    _createCookie(res, token)
-    return res.status(CREATED).json(user)
-  } catch (error) {
-    return res.status(BAD_REQUEST).json({ error })
+  _createCookie(res, token)
+  return res.status(CREATED).json(user)
+})
+
+const login = handler(async (req: Request, res: Response) => {
+  const { email, password } = req.body
+  const { user, token } = await authService.login({ email, password })
+
+  _createCookie(res, token)
+  return res.status(OK).json(user)
+})
+
+const logout = handler(async (req: Request, res: Response) => {
+  req.userId = null
+  res.clearCookie('access_token')
+  return res.status(OK).json({})
+})
+
+const me = handler(async (req: Request, res: Response) => {
+  const userId = req.userId
+
+  if (!userId) {
+    throw new AppError(UNAUTHORIZED, 'unauthorized')
   }
-}
 
-async function login(req: Request, res: Response) {
-  try {
-    const { email, password } = req.body
-    const { user, token } = await authService.login({ email, password })
-
-    _createCookie(res, token)
-    return res.status(OK).json(user)
-  } catch (error) {
-    return res.status(BAD_REQUEST).json({ error })
+  if (!mongoose.isValidObjectId(userId)) {
+    throw new AppError(BAD_REQUEST, 'invalid id')
   }
-}
 
-async function logout(req: Request, res: Response) {
-  try {
-    req.userId = null
-    res.clearCookie('access_token')
-    return res.status(OK).json({})
-  } catch (error) {
-    return res.status(BAD_REQUEST).json({ error })
-  }
-}
+  const id = new mongoose.Types.ObjectId(userId)
+  const user = await authService.me(id)
 
-async function me(req: Request, res: Response) {
-  try {
-    const userId = req.userId
-
-    if (!userId) {
-      return res.status(UNAUTHORIZED).json({ message: 'unauthorized' })
-    }
-
-    if (!mongoose.isValidObjectId(userId)) {
-      return res.status(BAD_REQUEST).json({ message: 'invalid id' })
-    }
-
-    const id = new mongoose.Types.ObjectId(userId)
-    const user = await authService.me(id)
-
-    return res.status(OK).json(user)
-  } catch (error) {
-    return res.status(BAD_REQUEST).json({ error })
-  }
-}
+  return res.status(OK).json(user)
+})
 
 function _createCookie(res: Response<any, Record<string, any>>, token: string) {
   res.cookie('access_token', token, {

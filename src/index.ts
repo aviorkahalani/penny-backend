@@ -5,6 +5,7 @@ import authRoutes from './api/auth/auth.routes'
 
 import 'dotenv/config'
 import './db'
+import errorHandler from './middlewares/errorHandler'
 
 const app: Express = express()
 const port = process.env.PORT
@@ -25,6 +26,8 @@ app.get('/', (req: Request, res: Response) => {
 
 // routes
 app.use('/api/auth', authRoutes)
+
+app.use(errorHandler)
 
 app.listen(port, () => {
   console.log(`server listening on http://localhost:${port}`)
