@@ -1,4 +1,5 @@
 import express, { Express, Request, Response } from 'express'
+import cors, { CorsOptions } from 'cors'
 import cookieParser from 'cookie-parser'
 import authRoutes from './api/auth/auth.routes'
 
@@ -7,11 +8,16 @@ import './db'
 
 const app: Express = express()
 const port = process.env.PORT
+const corsOptions: CorsOptions = {
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+  credentials: true,
+}
 
 // middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
+app.use(cors(corsOptions))
 
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, world')
