@@ -1,12 +1,13 @@
+import mongoose from 'mongoose'
 import { Request, Response } from 'express'
 import authService from './auth.service'
-import { BAD_REQUEST, CREATED, OK, UNAUTHORIZED } from '../../utils/http'
-import mongoose from 'mongoose'
 import { handler } from '../../utils/handler'
 import { AppError } from '../../utils/AppError'
+import { BAD_REQUEST, CREATED, OK, UNAUTHORIZED } from '../../utils/http'
 
 const register = handler(async (req: Request, res: Response) => {
   const { email, name, password } = req.body
+
   const { user, token } = await authService.register({
     email,
     name,

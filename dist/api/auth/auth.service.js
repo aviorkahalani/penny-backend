@@ -8,32 +8,30 @@ const user_1 = require("../../db/models/user");
 const AppError_1 = require("../../utils/AppError");
 const http_1 = require("../../utils/http");
 async function register(credentials) {
-    const isUserExist = await user_1.User.findOne({ email: credentials.email });
-    if (isUserExist) {
-        throw new AppError_1.AppError(http_1.BAD_REQUEST, 'user already exist');
-    }
     const user = new user_1.User(credentials);
     await user.save();
     const token = _generate_token(user._id);
-    return { user, token };
+    const { password: pwd, ...safeUser } = user.toObject();
+    return { user: safeUser, token };
 }
 async function login(credentials) {
     const { email, password } = credentials;
-    const user = await user_1.User.findOne({ email });
+    const user = await user_1.User.findOne({ email }).select('+password');
     if (!user) {
-        throw new Error('user does not exist');
+        throw new AppError_1.AppError(http_1.NOT_FOUND, 'user not found');
     }
     const isMatchedPassword = await user.comparePasswords(password);
     if (!isMatchedPassword) {
-        throw new Error('invalid user password');
+        throw new AppError_1.AppError(http_1.BAD_REQUEST, 'incorrect password');
     }
     const token = _generate_token(user._id);
-    return { user, token };
+    const { password: pwd, ...safeUser } = user.toObject();
+    return { user: safeUser, token };
 }
 async function me(id) {
-    const user = await user_1.User.findById(id).select('-password');
+    const user = await user_1.User.findById(id);
     if (!user) {
-        throw new Error('user does not exist');
+        throw new AppError_1.AppError(http_1.NOT_FOUND, 'user not found');
     }
     return user;
 }
