@@ -2,12 +2,13 @@ import mongoose, { Schema, Types } from 'mongoose'
 
 export interface IBudget {
   userId: Types.ObjectId
+  name: string
+  currency: 'NIS' | 'USD'
+  notes?: string
   date: {
     year: number
     month: number
   }
-  currency: 'NIS' | 'USD'
-  notes?: string
 }
 
 const schema = new Schema<IBudget>(
@@ -15,6 +16,20 @@ const schema = new Schema<IBudget>(
     userId: {
       type: Schema.Types.ObjectId,
       required: true,
+    },
+    name: {
+      type: String,
+      maxLength: 120,
+      trim: true,
+      lowercase: true,
+    },
+    currency: {
+      type: String,
+      default: 'NIS',
+    },
+    notes: {
+      type: String,
+      maxLength: 240,
     },
     date: {
       year: {
@@ -29,14 +44,6 @@ const schema = new Schema<IBudget>(
         max: [12, 'invalid month range'],
         default: new Date().getMonth() + 1,
       },
-    },
-    currency: {
-      type: String,
-      default: 'NIS',
-    },
-    notes: {
-      type: String,
-      maxLength: 240,
     },
   },
   { timestamps: true }
