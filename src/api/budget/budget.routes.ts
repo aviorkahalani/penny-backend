@@ -1,14 +1,15 @@
 import { Router } from 'express'
 import budgetController from './budget.controller'
+import isAuthenticated from '../../middlewares/isAuthenticated'
+import isOwner from '../../middlewares/isOwner'
 
 const router = Router()
 
 router
-  .get('/', budgetController.fetchBudgets)
-  .get('/current', budgetController.fetchCurrentBudget)
-  .get('/:id', budgetController.fetchBudgetById)
-  .post('/', budgetController.createBudget)
-// .patch('/:id', budgetController.updateBudget)
-// .delete('/:id', budgetController.deleteBudget)
+  .get('/', isAuthenticated, budgetController.fetchBudgets)
+  .get('/current', isAuthenticated, budgetController.fetchCurrentBudget)
+  .get('/:id', isAuthenticated, isOwner, budgetController.fetchBudgetById)
+  .post('/', isAuthenticated, budgetController.createBudget)
+  .delete('/:id', isAuthenticated, isOwner, budgetController.deleteBudget)
 
 export default router

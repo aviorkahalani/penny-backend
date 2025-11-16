@@ -1,13 +1,13 @@
 import mongoose, { Schema, Types } from 'mongoose'
 
-interface IBudget {
+export interface IBudget {
   userId: Types.ObjectId
   date: {
     year: number
     month: number
   }
   currency: 'NIS' | 'USD'
-  notes: string
+  notes?: string
 }
 
 const schema = new Schema<IBudget>(
@@ -17,8 +17,18 @@ const schema = new Schema<IBudget>(
       required: true,
     },
     date: {
-      year: { type: Number, required: true },
-      month: { type: Number, required: true, min: 1, max: 12 },
+      year: {
+        type: Number,
+        required: true,
+        default: new Date().getFullYear(),
+      },
+      month: {
+        type: Number,
+        required: true,
+        min: [1, 'invalid month range'],
+        max: [12, 'invalid month range'],
+        default: new Date().getMonth() + 1,
+      },
     },
     currency: {
       type: String,
@@ -26,7 +36,7 @@ const schema = new Schema<IBudget>(
     },
     notes: {
       type: String,
-      maxLength: 120,
+      maxLength: 240,
     },
   },
   { timestamps: true }

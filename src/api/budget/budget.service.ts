@@ -1,10 +1,10 @@
 import { Types } from 'mongoose'
-import { Budget } from '../../db/models/budget'
+import { Budget, IBudget } from '../../db/models/budget'
 import { AppError } from '../../utils/AppError'
-import { NOT_FOUND } from '../../utils/http'
+import { BAD_REQUEST, NOT_FOUND } from '../../utils/http'
 
-const fetchBudgets = async () => {
-  const budgets = await Budget.find()
+const fetchBudgets = async (userId: string) => {
+  const budgets = await Budget.find({ userId })
   if (!budgets || !budgets.length) {
     throw new AppError(NOT_FOUND, 'could not find budgets')
   }
@@ -12,11 +12,11 @@ const fetchBudgets = async () => {
   return budgets
 }
 
-const fetchCurrentBudget = async () => {
+const fetchCurrentBudget = async (userId: string) => {
   const date = new Date()
-  const [year, month] = [date.getFullYear(), date.getMonth()]
+  const [year, month] = [date.getFullYear(), date.getUTCMonth() + 1]
 
-  const budget = await Budget.findOne({ date: { year, month } })
+  const budget = await Budget.findOne({ userId, date: { year, month } })
   if (!budget) {
     throw new AppError(NOT_FOUND, 'could not find current budget')
   }
@@ -34,10 +34,21 @@ const fetchBudgetById = async (id: Types.ObjectId) => {
   return budget
 }
 
-const createBudget = async () => {}
+const createBudget = async (data: IBudget) => {
+  const budget = new Budget(data)
+  await budget.save()
+
+  return budget
+}
+
+const deleteBudget = async (id: Types.ObjectId) => {
+  return await Budget.findByIdAndDelete(id)
+}
 
 export default {
   fetchBudgets,
   fetchCurrentBudget,
   fetchBudgetById,
+  createBudget,
+  deleteBudget,
 }
