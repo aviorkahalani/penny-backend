@@ -4,10 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const auth_service_1 = __importDefault(require("./auth.service"));
 const handler_1 = require("../../utils/handler");
 const AppError_1 = require("../../utils/AppError");
 const http_1 = require("../../utils/http");
+const auth_service_1 = __importDefault(require("./auth.service"));
 const register = (0, handler_1.handler)(async (req, res) => {
     const { email, name, password } = req.body;
     const { user, token } = await auth_service_1.default.register({

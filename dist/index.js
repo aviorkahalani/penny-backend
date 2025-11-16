@@ -3,13 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+require("dotenv/config");
+require("./db");
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const auth_routes_1 = __importDefault(require("./api/auth/auth.routes"));
-require("dotenv/config");
-require("./db");
 const errorHandler_1 = __importDefault(require("./middlewares/errorHandler"));
+const auth_routes_1 = __importDefault(require("./api/auth/auth.routes"));
+const budget_routes_1 = __importDefault(require("./api/budget/budget.routes"));
 const app = (0, express_1.default)();
 const port = process.env.PORT;
 const corsOptions = {
@@ -26,6 +27,8 @@ app.get('/', (req, res) => {
 });
 // routes
 app.use('/api/auth', auth_routes_1.default);
+app.use('/api/budget', budget_routes_1.default);
+// middlewares
 app.use(errorHandler_1.default);
 app.listen(port, () => {
     console.log(`server listening on http://localhost:${port}`);

@@ -1,11 +1,12 @@
+import 'dotenv/config'
+import './db'
+
 import express, { Express, Request, Response } from 'express'
 import cors, { CorsOptions } from 'cors'
 import cookieParser from 'cookie-parser'
-import authRoutes from './api/auth/auth.routes'
-
-import 'dotenv/config'
-import './db'
 import errorHandler from './middlewares/errorHandler'
+import authRoutes from './api/auth/auth.routes'
+import budgetRoutes from './api/budget/budget.routes'
 
 const app: Express = express()
 const port = process.env.PORT
@@ -26,7 +27,9 @@ app.get('/', (req: Request, res: Response) => {
 
 // routes
 app.use('/api/auth', authRoutes)
+app.use('/api/budget', budgetRoutes)
 
+// middlewares
 app.use(errorHandler)
 
 app.listen(port, () => {
