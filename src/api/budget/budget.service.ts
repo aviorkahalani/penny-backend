@@ -1,7 +1,7 @@
 import { Types } from 'mongoose'
 import { Budget, IBudget } from '../../db/models/budget'
 import { AppError } from '../../utils/AppError'
-import { BAD_REQUEST, NOT_FOUND } from '../../utils/http'
+import { NOT_FOUND } from '../../utils/http'
 
 const fetchBudgets = async (userId: string) => {
   const budgets = await Budget.find({ userId })
