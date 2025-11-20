@@ -21,7 +21,7 @@ const isOwner = handler(
     const id = new mongoose.Types.ObjectId(budgetId)
     const budget = await budgetService.fetchBudgetById(id)
 
-    if (budget.userId !== new mongoose.Types.ObjectId(userId)) {
+    if (!budget.userId.equals(new mongoose.Types.ObjectId(userId))) {
       throw new AppError(FORBIDDEN, 'you are not the owner')
     }
 
