@@ -41,6 +41,11 @@ const createBudget = async (data: IBudget) => {
   return budget
 }
 
+const updateBudget = async (id: Types.ObjectId, data: Partial<IBudget>) => {
+  const budget = await Budget.findByIdAndUpdate(id, data, { new: true })
+  return budget
+}
+
 const deleteBudget = async (id: Types.ObjectId) => {
   return await Budget.findByIdAndDelete(id)
 }
@@ -50,5 +55,6 @@ export default {
   fetchCurrentBudget,
   fetchBudgetById,
   createBudget,
+  updateBudget,
   deleteBudget,
 }

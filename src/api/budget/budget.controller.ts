@@ -46,6 +46,19 @@ const createBudget = handler(async (req: Request, res: Response) => {
   res.status(OK).json(budget)
 })
 
+const updateBudget = handler(async (req: Request, res: Response) => {
+  const { body } = req
+  const { id: budgetId } = req.params
+
+  if (!mongoose.isValidObjectId(budgetId)) {
+    throw new AppError(BAD_REQUEST, 'invalid id')
+  }
+
+  const id = new mongoose.Types.ObjectId(budgetId)
+  const budget = await budgetService.updateBudget(id, body)
+  res.status(OK).json(budget)
+})
+
 const deleteBudget = handler(async (req: Request, res: Response) => {
   const { id: budgetId } = req.params
 
@@ -63,5 +76,6 @@ export default {
   fetchCurrentBudget,
   fetchBudgetById,
   createBudget,
+  updateBudget,
   deleteBudget,
 }

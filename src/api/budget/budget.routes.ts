@@ -10,6 +10,7 @@ router
   .get('/current', isAuthenticated, budgetController.fetchCurrentBudget)
   .get('/:id', isAuthenticated, isOwner, budgetController.fetchBudgetById)
   .post('/', isAuthenticated, budgetController.createBudget)
+  .put('/:id', isAuthenticated, isOwner, budgetController.updateBudget)
   .delete('/:id', isAuthenticated, isOwner, budgetController.deleteBudget)
 
 export default router

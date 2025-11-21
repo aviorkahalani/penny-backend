@@ -9,6 +9,8 @@ export interface IBudget {
     year: number
     month: number
   }
+  createdAt: Date
+  updatedAt: Date
 }
 
 const schema = new Schema<IBudget>(
