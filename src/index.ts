@@ -5,8 +5,10 @@ import express, { Express, Request, Response } from 'express'
 import cors, { CorsOptions } from 'cors'
 import cookieParser from 'cookie-parser'
 import errorHandler from './middlewares/errorHandler'
+
 import authRoutes from './api/auth/auth.routes'
 import budgetRoutes from './api/budget/budget.routes'
+import categoryRoutes from './api/category/category.routes'
 
 const app: Express = express()
 const port = process.env.PORT
@@ -28,6 +30,7 @@ app.get('/', (req: Request, res: Response) => {
 // routes
 app.use('/api/auth', authRoutes)
 app.use('/api/budget', budgetRoutes)
+app.use('/api/category', categoryRoutes)
 
 // middlewares
 app.use(errorHandler)
