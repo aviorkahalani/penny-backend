@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import { isValidObjectId, Types } from 'mongoose'
 import { Request, Response } from 'express'
 import { handler } from '../../utils/handler'
 import { BAD_REQUEST, OK, UNAUTHORIZED } from '../../utils/http'
@@ -24,49 +24,48 @@ const fetchCurrentBudget = handler(async (req: Request, res: Response) => {
 })
 
 const fetchBudgetById = handler(async (req: Request, res: Response) => {
-  const { id: budgetId } = req.params
+  const { budgetId } = req.params
 
-  if (!mongoose.isValidObjectId(budgetId)) {
+  if (!isValidObjectId(budgetId)) {
     throw new AppError(BAD_REQUEST, 'invalid id')
   }
 
-  const id = new mongoose.Types.ObjectId(budgetId)
+  const id = new Types.ObjectId(budgetId)
   const budget = await budgetService.fetchBudgetById(id)
   res.status(OK).json(budget)
 })
 
 const createBudget = handler(async (req: Request, res: Response) => {
-  const userId = req.userId
-  if (!userId) {
+  if (!req.userId) {
     throw new AppError(UNAUTHORIZED, 'user must be logged in')
   }
 
-  const data = { userId, ...req.body }
+  const data = { userId: req.userId, ...req.body }
   const budget = await budgetService.createBudget(data)
   res.status(OK).json(budget)
 })
 
 const updateBudget = handler(async (req: Request, res: Response) => {
   const { body } = req
-  const { id: budgetId } = req.params
+  const { budgetId } = req.params
 
-  if (!mongoose.isValidObjectId(budgetId)) {
+  if (!isValidObjectId(budgetId)) {
     throw new AppError(BAD_REQUEST, 'invalid id')
   }
 
-  const id = new mongoose.Types.ObjectId(budgetId)
+  const id = new Types.ObjectId(budgetId)
   const budget = await budgetService.updateBudget(id, body)
   res.status(OK).json(budget)
 })
 
 const deleteBudget = handler(async (req: Request, res: Response) => {
-  const { id: budgetId } = req.params
+  const { budgetId } = req.params
 
-  if (!mongoose.isValidObjectId(budgetId)) {
+  if (!isValidObjectId(budgetId)) {
     throw new AppError(BAD_REQUEST, 'invalid id')
   }
 
-  const id = new mongoose.Types.ObjectId(budgetId)
+  const id = new Types.ObjectId(budgetId)
   const budget = await budgetService.deleteBudget(id)
   res.status(OK).json(budget)
 })

@@ -8,9 +8,9 @@ const router = Router()
 router
   .get('/', isAuthenticated, budgetController.fetchBudgets)
   .get('/current', isAuthenticated, budgetController.fetchCurrentBudget)
-  .get('/:id', isAuthenticated, isOwner, budgetController.fetchBudgetById)
+  .get('/:budgetId', isAuthenticated, isOwner, budgetController.fetchBudgetById)
   .post('/', isAuthenticated, budgetController.createBudget)
-  .put('/:id', isAuthenticated, isOwner, budgetController.updateBudget)
-  .delete('/:id', isAuthenticated, isOwner, budgetController.deleteBudget)
+  .put('/:budgetId', isAuthenticated, isOwner, budgetController.updateBudget)
+  .delete('/:budgetId', isAuthenticated, isOwner, budgetController.deleteBudget)
 
 export default router

@@ -1,9 +1,11 @@
-import mongoose from 'mongoose'
+import { isValidObjectId, Types } from 'mongoose'
 import { Request, Response } from 'express'
 import { handler } from '../../utils/handler'
 import { AppError } from '../../utils/AppError'
 import { BAD_REQUEST, CREATED, OK, UNAUTHORIZED } from '../../utils/http'
 import authService from './auth.service'
+
+const ONE_HOUR = 1000 * 60 * 60
 
 const register = handler(async (req: Request, res: Response) => {
   const { email, name, password } = req.body
@@ -33,17 +35,15 @@ const logout = handler(async (req: Request, res: Response) => {
 })
 
 const me = handler(async (req: Request, res: Response) => {
-  const userId = req.userId
-
-  if (!userId) {
+  if (!req.userId) {
     throw new AppError(UNAUTHORIZED, 'unauthorized')
   }
 
-  if (!mongoose.isValidObjectId(userId)) {
-    throw new AppError(BAD_REQUEST, 'invalid id')
+  if (!isValidObjectId(req.userId)) {
+    throw new AppError(BAD_REQUEST, 'invalid user id')
   }
 
-  const id = new mongoose.Types.ObjectId(userId)
+  const id = new Types.ObjectId(req.userId)
   const user = await authService.me(id)
 
   return res.status(OK).json(user)
@@ -54,7 +54,7 @@ function _createCookie(res: Response<any, Record<string, any>>, token: string) {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
-    maxAge: 1000 * 60 * 60,
+    maxAge: ONE_HOUR,
   })
 }
 

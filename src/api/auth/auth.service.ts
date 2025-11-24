@@ -10,7 +10,7 @@ interface Credentials {
   password: string
 }
 
-async function register(credentials: Credentials) {
+const register = async (credentials: Credentials) => {
   const user = new User(credentials)
   await user.save()
 
@@ -20,7 +20,7 @@ async function register(credentials: Credentials) {
   return { user: safeUser, token }
 }
 
-async function login(credentials: Omit<Credentials, 'name'>) {
+const login = async (credentials: Omit<Credentials, 'name'>) => {
   const { email, password } = credentials
   const user = await User.findOne({ email }).select('+password')
 
@@ -40,7 +40,7 @@ async function login(credentials: Omit<Credentials, 'name'>) {
   return { user: safeUser, token }
 }
 
-async function me(id: Types.ObjectId) {
+const me = async (id: Types.ObjectId) => {
   const user = await User.findById(id)
   if (!user) {
     throw new AppError(NOT_FOUND, 'user not found')
@@ -49,7 +49,7 @@ async function me(id: Types.ObjectId) {
   return user
 }
 
-function _generate_token(userId: Types.ObjectId) {
+const _generate_token = (userId: Types.ObjectId) => {
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: '1h' })
 }
 

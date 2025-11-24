@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import { isValidObjectId, Types } from 'mongoose'
 import { Request, Response, NextFunction } from 'express'
 import { UNAUTHORIZED, FORBIDDEN, BAD_REQUEST } from '../utils/http'
 import { handler } from '../utils/handler'
@@ -7,21 +7,20 @@ import budgetService from '../api/budget/budget.service'
 
 const isOwner = handler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { id: budgetId } = req.params
-    const userId = req.userId
+    const { budgetId } = req.params
 
-    if (!userId) {
+    if (!req.userId) {
       throw new AppError(UNAUTHORIZED, 'unauthorized')
     }
 
-    if (!mongoose.isValidObjectId(budgetId)) {
+    if (!isValidObjectId(budgetId)) {
       throw new AppError(BAD_REQUEST, 'invalid type of id')
     }
 
-    const id = new mongoose.Types.ObjectId(budgetId)
+    const id = new Types.ObjectId(budgetId)
     const budget = await budgetService.fetchBudgetById(id)
 
-    if (!budget.userId.equals(new mongoose.Types.ObjectId(userId))) {
+    if (!budget.userId.equals(new Types.ObjectId(req.userId))) {
       throw new AppError(FORBIDDEN, 'you are not the owner')
     }
 
