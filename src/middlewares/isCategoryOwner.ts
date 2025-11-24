@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import { isValidObjectId, Types } from 'mongoose'
 import { Request, Response, NextFunction } from 'express'
 import { UNAUTHORIZED, FORBIDDEN, BAD_REQUEST, NOT_FOUND } from '../utils/http'
 import { handler } from '../utils/handler'
@@ -7,25 +7,24 @@ import categoryService from '../api/category/category.service'
 
 const isCategoryOwner = handler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const { id: categoryId } = req.params
-    const userId = req.userId
+    const { categoryId } = req.params
 
-    if (!userId) {
+    if (!req.userId) {
       throw new AppError(UNAUTHORIZED, 'unauthorized')
     }
 
-    if (!mongoose.isValidObjectId(categoryId)) {
+    if (!isValidObjectId(categoryId)) {
       throw new AppError(BAD_REQUEST, 'invalid type of id')
     }
 
-    const id = new mongoose.Types.ObjectId(categoryId)
+    const id = new Types.ObjectId(categoryId)
     const category = await categoryService.fetchCategoryById(id)
 
     if (!category) {
       throw new AppError(NOT_FOUND, 'cannot find category')
     }
 
-    if (!category.userId.equals(new mongoose.Types.ObjectId(userId))) {
+    if (!category.userId.equals(new Types.ObjectId(req.userId))) {
       throw new AppError(FORBIDDEN, 'you are not the owner')
     }
 

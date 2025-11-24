@@ -8,20 +8,20 @@ const router = Router()
 router
   .get('/', categoryController.fetchCategories)
   .get(
-    '/:id',
+    '/:categoryId',
     isAuthenticated,
     isCategoryOwner,
     categoryController.fetchCategoryById
   )
-  .post('/:budgetId', isAuthenticated, categoryController.createCategory)
+  .post('/', isAuthenticated, categoryController.createCategory)
   .put(
-    '/:id',
+    '/:categoryId',
     isAuthenticated,
     isCategoryOwner,
     categoryController.updateCategory
   )
   .delete(
-    '/:id',
+    '/:categoryId',
     isAuthenticated,
     isCategoryOwner,
     categoryController.deleteCategory
