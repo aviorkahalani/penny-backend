@@ -76,4 +76,4 @@ schema.pre('save', async function (next) {
     this.password = await bcrypt_1.default.hash(this.password, salt);
     next();
 });
-exports.User = mongoose_1.default.model('user', schema);
+exports.User = mongoose_1.default.model('User', schema);

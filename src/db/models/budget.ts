@@ -51,4 +51,4 @@ const schema = new Schema<IBudget>(
   { timestamps: true }
 )
 
-export const Budget = mongoose.model('budget', schema)
+export const Budget = mongoose.model('Budget', schema)

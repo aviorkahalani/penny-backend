@@ -12,7 +12,19 @@ interface PostReqBody {
 }
 
 const fetchCategories = handler(async (req, res) => {
-  const categories = await categoryService.fetchCategories()
+  if (!req.userId) {
+    throw new AppError(UNAUTHORIZED, 'unauthorized')
+  }
+
+  const { budgetId } = req.params
+  if (!budgetId) {
+    throw new AppError(BAD_REQUEST, 'missing budget id')
+  }
+
+  const id = new Types.ObjectId(req.userId)
+  const bid = new Types.ObjectId(budgetId)
+
+  const categories = await categoryService.fetchCategories(id, bid)
   return res.status(OK).json(categories)
 })
 

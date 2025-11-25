@@ -6,7 +6,7 @@ import isCategoryOwner from '../../middlewares/isCategoryOwner'
 const router = Router()
 
 router
-  .get('/', categoryController.fetchCategories)
+  .get('/:budgetId', isAuthenticated, categoryController.fetchCategories)
   .get(
     '/:categoryId',
     isAuthenticated,

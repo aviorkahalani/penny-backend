@@ -57,4 +57,4 @@ schema.pre('save', async function (next) {
   next()
 })
 
-export const User = mongoose.model<IUser, UserModel>('user', schema)
+export const User = mongoose.model<IUser, UserModel>('User', schema)
