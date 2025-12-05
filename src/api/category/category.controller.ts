@@ -1,4 +1,4 @@
-import { isValidObjectId, Types } from 'mongoose'
+import { isValidObjectId, StringExpressionOperatorReturningNumber, Types } from 'mongoose'
 import { handler } from '../../utils/handler'
 import { BAD_REQUEST, OK, UNAUTHORIZED } from '../../utils/http'
 import { AppError } from '../../utils/AppError'
@@ -21,10 +21,12 @@ const fetchCategories = handler(async (req, res) => {
     throw new AppError(BAD_REQUEST, 'missing budget id')
   }
 
+  const { type = '' } = req.query
+
   const id = new Types.ObjectId(req.userId)
   const bid = new Types.ObjectId(budgetId)
 
-  const categories = await categoryService.fetchCategories(id, bid)
+  const categories = await categoryService.fetchCategories(id, bid, type as string)
   return res.status(OK).json(categories)
 })
 
@@ -39,6 +41,17 @@ const fetchCategoryById = handler(async (req, res) => {
   const category = await categoryService.fetchCategoryById(id)
 
   return res.status(OK).json(category)
+})
+
+const fetchCategoryByType = handler(async (req, res) => {
+  if (!req.userId) {
+    throw new AppError(UNAUTHORIZED, 'unauthorized')
+  }
+
+  const { budgetId } = req.params
+  if (!budgetId) {
+    throw new AppError(BAD_REQUEST, 'missing budget id')
+  }
 })
 
 const createCategory = handler(async (req, res) => {
