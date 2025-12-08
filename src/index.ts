@@ -9,6 +9,7 @@ import errorHandler from './middlewares/errorHandler'
 import authRoutes from './api/auth/auth.routes'
 import budgetRoutes from './api/budget/budget.routes'
 import categoryRoutes from './api/category/category.routes'
+import transactionRoutes from './api/transaction/transaction.routes'
 
 const app: Express = express()
 const port = process.env.PORT
@@ -31,6 +32,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/api/auth', authRoutes)
 app.use('/api/budget', budgetRoutes)
 app.use('/api/category', categoryRoutes)
+app.use('/api/transaction', transactionRoutes)
 
 // middlewares
 app.use(errorHandler)
