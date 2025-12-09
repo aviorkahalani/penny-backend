@@ -2,7 +2,7 @@ import 'dotenv/config'
 import './db'
 
 import express, { Express, Request, Response } from 'express'
-import cors, { CorsOptions } from 'cors'
+import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import errorHandler from './middlewares/errorHandler'
 
@@ -13,7 +13,7 @@ import transactionRoutes from './api/transaction/transaction.routes'
 
 const app: Express = express()
 const port = process.env.PORT
-const corsOptions: CorsOptions = {
+const corsOptions: cors.CorsOptions = {
   origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
   credentials: true,
 }
