@@ -11,6 +11,7 @@ const fetchBudgets = handler(async (req: Request, res: Response) => {
   }
 
   const budgets = await budgetService.fetchBudgets(req.userId)
+
   res.status(OK).json(budgets)
 })
 

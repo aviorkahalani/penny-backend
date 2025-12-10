@@ -4,16 +4,10 @@ import { AppError } from '../../utils/AppError'
 import { NOT_FOUND } from '../../utils/http'
 
 const fetchBudgets = async (userId: string) => {
-  const budgets = await Budget.find({ userId }).sort({
+  return await Budget.find({ userId }).sort({
     'date.year': 1,
     'date.month': 1,
   })
-
-  if (!budgets || !budgets.length) {
-    throw new AppError(NOT_FOUND, 'could not find budgets')
-  }
-
-  return budgets
 }
 
 const fetchCurrentBudget = async (userId: string) => {
