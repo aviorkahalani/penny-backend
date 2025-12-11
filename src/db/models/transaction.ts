@@ -14,11 +14,11 @@ export interface ITransaction {
 const schema = new Schema<ITransaction>(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    budgetId: { type: Schema.Types.ObjectId, red: 'Budget', required: true },
+    budgetId: { type: Schema.Types.ObjectId, ref: 'Budget', required: true },
     type: { type: String, required: true },
     description: { type: String },
     amount: { type: Number, default: 0 },
-    date: { type: Date, default: Date.now() },
+    date: { type: Date, default: new Date() },
   },
   {
     timestamps: true,

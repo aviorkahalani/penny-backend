@@ -2,7 +2,7 @@ import { Types } from 'mongoose'
 import { ITransaction, Transaction } from '../../db/models/transaction'
 
 const fetchTransactions = async (bid: Types.ObjectId) => {
-  return await Transaction.find({ budgetId: bid }).sort({ date: 1 })
+  return await Transaction.find({ budgetId: bid }).sort({ date: -1 })
 }
 
 const fetchTransactionById = async (bid: Types.ObjectId, tid: Types.ObjectId) => {
