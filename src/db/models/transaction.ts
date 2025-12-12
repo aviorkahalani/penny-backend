@@ -3,6 +3,7 @@ import mongoose, { Schema, Types } from 'mongoose'
 export interface ITransaction {
   userId: Types.ObjectId
   budgetId: Types.ObjectId
+  categoryId: Types.ObjectId
   type: 'income' | 'expense' | 'saving'
   description?: string
   amount: number
@@ -15,6 +16,7 @@ const schema = new Schema<ITransaction>(
   {
     userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     budgetId: { type: Schema.Types.ObjectId, ref: 'Budget', required: true },
+    categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: true },
     type: { type: String, required: true },
     description: { type: String },
     amount: { type: Number, default: 0 },

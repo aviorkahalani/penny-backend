@@ -26,13 +26,17 @@ const fetchTransactionById = handler(async (req, res) => {
 const createTransaction = handler(async (req, res) => {
   const { userId } = req
   const { budgetId } = req.params
+  const { categoryId } = req.body
 
   if (!userId) throw new AppError(UNAUTHORIZED, 'unauthorized')
 
   const uid = new Types.ObjectId(userId)
   const bid = new Types.ObjectId(budgetId)
+  const cid = new Types.ObjectId(categoryId)
 
-  const transaction = await transactionService.createTransaction(uid, bid, req.body)
+  const data = { ...req.body, categoryId: cid }
+
+  const transaction = await transactionService.createTransaction(uid, bid, data)
   res.status(OK).json(transaction)
 })
 
