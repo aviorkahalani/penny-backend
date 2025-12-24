@@ -13,13 +13,14 @@ import transactionRoutes from './api/transaction/transaction.routes'
 import dashboardRoutes from './api/dashboard/dashboard.routes'
 
 const app: Express = express()
-const port = process.env.PORT
+const port = process.env.PORT || 3030
 const corsOptions: cors.CorsOptions = {
   origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
   credentials: true,
 }
 
 // middlewares
+app.use(express.static('public'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())

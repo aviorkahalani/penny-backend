@@ -15,12 +15,13 @@ const category_routes_1 = __importDefault(require("./api/category/category.route
 const transaction_routes_1 = __importDefault(require("./api/transaction/transaction.routes"));
 const dashboard_routes_1 = __importDefault(require("./api/dashboard/dashboard.routes"));
 const app = (0, express_1.default)();
-const port = process.env.PORT;
+const port = process.env.PORT || 3030;
 const corsOptions = {
     origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
     credentials: true,
 };
 // middlewares
+app.use(express_1.default.static('public'));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, cookie_parser_1.default)());
