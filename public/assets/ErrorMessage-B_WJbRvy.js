@@ -1,0 +1,1 @@
+import{ac as r}from"./chunk-OIYGIGL5-BJrXx6nP.js";import{C as s}from"./center-BleJ6I63.js";import{T as t}from"./index-Bnpdpr_K.js";const i=({error:o})=>r.jsx(s,{children:r.jsx(t,{fontFamily:"mono",fontSize:"sm",color:"fg.warning",children:o})});export{i as E};

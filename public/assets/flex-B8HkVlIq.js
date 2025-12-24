@@ -1,1 +1,0 @@
-import{aa as c,ac as p,aN as u}from"./chunk-OIYGIGL5-Dz3lc_zy.js";const m=c.forwardRef(function(s,e){const{direction:i,align:a,justify:r,wrap:n,basis:t,grow:l,shrink:x,inline:f,...o}=s;return p.jsx(u.div,{ref:e,...o,css:{display:f?"inline-flex":"flex",flexDirection:i,alignItems:a,justifyContent:r,flexWrap:n,flexBasis:t,flexGrow:l,flexShrink:x,...s.css}})});export{m as F};
