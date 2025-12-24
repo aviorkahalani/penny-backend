@@ -1,7 +1,11 @@
 import mongoose from 'mongoose'
 
 const main = async () => {
-  await mongoose.connect(process.env.MONGO_LOCAL_URI)
+  const uri =
+    process.env.NODE_ENV === 'development'
+      ? process.env.MONGO_LOCAL_URI
+      : process.env.MONGO_REMOTE_URI
+  await mongoose.connect(uri)
 }
 
 main()

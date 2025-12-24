@@ -27,4 +27,7 @@ const schema = new Schema<ITransaction>(
   }
 )
 
+schema.index({ userId: 1, budgetId: 1, date: 1 })
+schema.index({ userId: 1, budgetId: 1, categoryId: 1, date: 1 })
+
 export const Transaction = mongoose.model('Transaction', schema)

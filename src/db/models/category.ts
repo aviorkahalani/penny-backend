@@ -38,4 +38,6 @@ const schema = new Schema<ICategory>(
   { timestamps: true }
 )
 
+schema.index({ userId: 1, budgetId: 1, type: 1 })
+
 export const Category = mongoose.model('Category', schema)
