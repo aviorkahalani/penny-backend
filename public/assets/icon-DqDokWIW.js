@@ -1,0 +1,1 @@
+import{aa as o,c as r,ac as n,aN as i,aI as l}from"./chunk-OIYGIGL5-C8JJ9jlI.js";const{useRecipeResult:u}=r({key:"icon"}),m=o.forwardRef(function(s,a){const{styles:e,className:c,props:t}=u({asChild:!s.as,...s});return n.jsx(i.svg,{ref:a,focusable:!1,"aria-hidden":"true",...t,css:[e,s.css],className:l(c,s.className)})});export{m as I};
