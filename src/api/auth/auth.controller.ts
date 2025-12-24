@@ -1,9 +1,9 @@
 import { isValidObjectId, Types } from 'mongoose'
 import { Request, Response } from 'express'
-import { handler } from '../../utils/handler'
-import { AppError } from '../../utils/AppError'
-import { BAD_REQUEST, CREATED, OK, UNAUTHORIZED } from '../../utils/http'
-import authService from './auth.service'
+import { handler } from '../../utils/handler.js'
+import { AppError } from '../../utils/AppError.js'
+import { BAD_REQUEST, CREATED, OK, UNAUTHORIZED } from '../../utils/http.js'
+import authService from './auth.service.js'
 
 const ONE_HOUR = 1000 * 60 * 60
 

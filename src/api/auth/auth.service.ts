@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { Types } from 'mongoose'
-import { User } from '../../db/models/user'
-import { AppError } from '../../utils/AppError'
-import { BAD_REQUEST, NOT_FOUND } from '../../utils/http'
+import { User } from '../../db/models/user.js'
+import { AppError } from '../../utils/AppError.js'
+import { BAD_REQUEST, NOT_FOUND } from '../../utils/http.js'
 
 interface Credentials {
   email: string

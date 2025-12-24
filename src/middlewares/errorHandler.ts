@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { Error, MongooseError } from 'mongoose'
-import { AppError } from '../utils/AppError'
-import { BAD_REQUEST, CONFLICT, INTERNAL_SERVER_ERROR } from '../utils/http'
+import { AppError } from '../utils/AppError.js'
+import { BAD_REQUEST, CONFLICT, INTERNAL_SERVER_ERROR } from '../utils/http.js'
 
 interface ErrorResponse {
   success: boolean

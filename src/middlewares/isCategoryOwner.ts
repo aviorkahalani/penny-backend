@@ -1,9 +1,9 @@
 import { isValidObjectId, Types } from 'mongoose'
 import { Request, Response, NextFunction } from 'express'
-import { UNAUTHORIZED, FORBIDDEN, BAD_REQUEST, NOT_FOUND } from '../utils/http'
-import { handler } from '../utils/handler'
-import { AppError } from '../utils/AppError'
-import categoryService from '../api/category/category.service'
+import { UNAUTHORIZED, FORBIDDEN, BAD_REQUEST, NOT_FOUND } from '../utils/http.js'
+import { handler } from '../utils/handler.js'
+import { AppError } from '../utils/AppError.js'
+import categoryService from '../api/category/category.service.js'
 
 const isCategoryOwner = handler(
   async (req: Request, res: Response, next: NextFunction) => {

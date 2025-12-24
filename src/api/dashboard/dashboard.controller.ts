@@ -1,8 +1,8 @@
 import { Types } from 'mongoose'
-import { AppError } from '../../utils/AppError'
-import { handler } from '../../utils/handler'
-import { OK, UNAUTHORIZED } from '../../utils/http'
-import dashboardService from './dashboard.service'
+import { AppError } from '../../utils/AppError.js'
+import { handler } from '../../utils/handler.js'
+import { OK, UNAUTHORIZED } from '../../utils/http.js'
+import dashboardService from './dashboard.service.js'
 
 const getDashboardData = handler(async (req, res) => {
   const { userId } = req

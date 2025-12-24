@@ -1,8 +1,8 @@
 import { isValidObjectId, Types } from 'mongoose'
-import { handler } from '../../utils/handler'
-import { BAD_REQUEST, OK, UNAUTHORIZED } from '../../utils/http'
-import { AppError } from '../../utils/AppError'
-import categoryService from './category.service'
+import { handler } from '../../utils/handler.js'
+import { BAD_REQUEST, OK, UNAUTHORIZED } from '../../utils/http.js'
+import { AppError } from '../../utils/AppError.js'
+import categoryService from './category.service.js'
 
 interface PostReqBody {
   budgetId: string

@@ -1,8 +1,8 @@
 import jwt, { type JwtPayload } from 'jsonwebtoken'
 import { Request, Response, NextFunction } from 'express'
-import { UNAUTHORIZED } from '../utils/http'
-import { handler } from '../utils/handler'
-import { AppError } from '../utils/AppError'
+import { UNAUTHORIZED } from '../utils/http.js'
+import { handler } from '../utils/handler.js'
+import { AppError } from '../utils/AppError.js'
 
 interface Payload extends JwtPayload {
   userId: string

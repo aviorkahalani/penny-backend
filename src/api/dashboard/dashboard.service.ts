@@ -1,5 +1,5 @@
-import { Transaction } from '../../db/models/transaction'
 import { Types } from 'mongoose'
+import { Transaction } from '../../db/models/transaction.js'
 
 interface Args {
   userId: Types.ObjectId

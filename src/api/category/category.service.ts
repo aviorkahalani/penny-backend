@@ -1,7 +1,11 @@
 import { Types } from 'mongoose'
-import { Category, ICategory } from '../../db/models/category'
+import { Category, ICategory } from '../../db/models/category.js'
 
-const fetchCategories = async (userId: Types.ObjectId, budgetId: Types.ObjectId, type: string) => {
+const fetchCategories = async (
+  userId: Types.ObjectId,
+  budgetId: Types.ObjectId,
+  type: string
+) => {
   let criteria = {}
   if (type) criteria = { userId, budgetId, type }
   else criteria = { userId, budgetId }

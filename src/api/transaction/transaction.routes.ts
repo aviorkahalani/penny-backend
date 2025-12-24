@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import transactionsController from './transaction.controller'
-import isAuthenticated from '../../middlewares/isAuthenticated'
-import isBudgetOwner from '../../middlewares/isBudgetOwner'
-import isTransactionOwner from '../../middlewares/isTransactionOwner'
+import transactionsController from './transaction.controller.js'
+import isAuthenticated from '../../middlewares/isAuthenticated.js'
+import isBudgetOwner from '../../middlewares/isBudgetOwner.js'
+import isTransactionOwner from '../../middlewares/isTransactionOwner.js'
 
 const router = Router()
 

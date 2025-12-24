@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import categoryController from './category.controller'
-import isAuthenticated from '../../middlewares/isAuthenticated'
-import isCategoryOwner from '../../middlewares/isCategoryOwner'
+import categoryController from './category.controller.js'
+import isAuthenticated from '../../middlewares/isAuthenticated.js'
+import isCategoryOwner from '../../middlewares/isCategoryOwner.js'
 
 const router = Router()
 

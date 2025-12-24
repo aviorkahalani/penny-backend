@@ -6,11 +6,11 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import errorHandler from './middlewares/errorHandler'
 
-import authRoutes from './api/auth/auth.routes'
-import budgetRoutes from './api/budget/budget.routes'
-import categoryRoutes from './api/category/category.routes'
-import transactionRoutes from './api/transaction/transaction.routes'
-import dashboardRoutes from './api/dashboard/dashboard.routes'
+import authRoutes from './api/auth/auth.routes.js'
+import budgetRoutes from './api/budget/budget.routes.js'
+import categoryRoutes from './api/category/category.routes.js'
+import transactionRoutes from './api/transaction/transaction.routes.js'
+import dashboardRoutes from './api/dashboard/dashboard.routes.js'
 
 const app: Express = express()
 const port = process.env.PORT || 3030

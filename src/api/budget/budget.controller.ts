@@ -1,9 +1,9 @@
 import { isValidObjectId, Types } from 'mongoose'
 import { Request, Response } from 'express'
-import { handler } from '../../utils/handler'
-import { BAD_REQUEST, OK, UNAUTHORIZED } from '../../utils/http'
-import { AppError } from '../../utils/AppError'
-import budgetService from './budget.service'
+import { handler } from '../../utils/handler.js'
+import { BAD_REQUEST, OK, UNAUTHORIZED } from '../../utils/http.js'
+import { AppError } from '../../utils/AppError.js'
+import budgetService from './budget.service.js'
 
 const fetchBudgets = handler(async (req: Request, res: Response) => {
   if (!req.userId) {

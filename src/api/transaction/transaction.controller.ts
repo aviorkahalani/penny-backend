@@ -1,8 +1,8 @@
-import mongoose, { Types } from 'mongoose'
-import { handler } from '../../utils/handler'
-import transactionService from './transaction.service'
-import { NO_CONTENT, OK, UNAUTHORIZED } from '../../utils/http'
-import { AppError } from '../../utils/AppError'
+import { Types } from 'mongoose'
+import { handler } from '../../utils/handler.js'
+import { NO_CONTENT, OK, UNAUTHORIZED } from '../../utils/http.js'
+import { AppError } from '../../utils/AppError.js'
+import transactionService from './transaction.service.js'
 
 const fetchTransactions = handler(async (req, res) => {
   const { budgetId } = req.params
